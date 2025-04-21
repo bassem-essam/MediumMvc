@@ -1,0 +1,129 @@
+@model Post
+
+@{
+    ViewData["title"] = @Model.Title;
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="display-4">@Model.Title</h1>
+            <a asp-controller="Author" asp-action="Details" asp-route-username="@Model.Author?.Username"
+                class="d-inline-flex align-items-center gap-1">
+                <img src="@Model.Author?.ProfilePictureUrl" alt="@Model.Author?.DisplayName" class="rounded-circle"
+                    style="width: 2em; height: 2em;" />
+                @Model.Author?.DisplayName
+            </a>
+            <br />
+            <p class="text-muted">Published on @Model.CreatedAt
+                @if (ViewBag.IsAuthor)
+                {
+                    <a asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                }
+            </p>
+
+
+            <div class="post-content">
+                @Html.Raw(Model.Content)
+            </div>
+
+                <!-- Clap Button -->
+                <div class="clap-container mb-4">
+                    <button class="btn btn-outline-secondary clap-btn @(User.Identity.IsAuthenticated ? "" : "disabled")" data-post-id="@Model.Id"
+                        onclick="toggleClap('@Model.Id')">
+                        👏 <span class="clap-count">@Model.TotalClaps</span>
+                    </button>
+                </div>
+
+            <!-- Comments Section -->
+            <div class="comments-section mt-5">
+                <h3>Comments (@Model.Comments.Count)</h3>
+                
+                @foreach (var comment in Model.Comments.OrderBy(c => c.CreatedAt))
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <img src="@comment.Author?.ProfilePictureUrl" alt="@comment.Author?.DisplayName" 
+                                    class="rounded-circle" style="width: 2em; height: 2em;" />
+                                <strong>@comment.Author?.DisplayName</strong>
+                                <small class="text-muted">@comment.CreatedAt.ToString("MMM dd, yyyy")</small>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                @if (comment.Author.Username == ViewBag.AuthorUserName)
+                                {
+                                    <a asp-controller="Comment" asp-action="Edit" asp-route-id="@comment.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <form asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete your comment?')">Delete</button>
+                                    </form>
+                                }
+                                else if (Model.Author.Username == ViewBag.AuthorUserName)
+                                {
+                                    <form asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this comment as post author?')">Delete</button>
+                                    </form>
+                                }
+                            }
+                            </div>
+                            <p class="card-text">@comment.Content</p>
+                                @* <div class="mt-2">
+                                </div> *@
+                        </div>
+                    </div>
+                }
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <form asp-controller="Comment" asp-action="Create" method="post">
+                        <input type="hidden" name="postId" value="@Model.Id" />
+                        <div class="form-group">
+                            <textarea name="content" class="form-control" rows="3" placeholder="Add a comment..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Simple click handler
+        async function toggleClap(postId) {
+            try {
+                const response = await fetch(`/api/like/${postId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+                document.querySelector(`.clap-btn[data-post-id="${postId}"] .clap-count`).textContent = result.totalClaps;
+
+                // Toggle button style
+                const btn = document.querySelector(`.clap-btn[data-post-id="${postId}"]`);
+                btn.classList.toggle('btn-outline-secondary');
+                btn.classList.toggle('btn-primary');
+
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // Initialize button state
+        document.addEventListener('DOMContentLoaded', async function () {
+            const postId = '@Model.Id';
+            const response = await fetch(`/api/like/${postId}`);
+            const result = await response.json();
+
+            document.querySelector(`.clap-count`).textContent = result.totalClaps;
+            const btn = document.querySelector(`.clap-btn[data-post-id="${postId}"]`);
+            if (result.hasLiked) {
+                btn.classList.remove('btn-outline-secondary');
+                btn.classList.add('btn-primary');
+            }
+        });
+    </script>
+}

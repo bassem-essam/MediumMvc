@@ -1,0 +1,44 @@
+@model Post
+
+<div class="card mb-4">
+    <div class="card-body">
+        <!-- Post Title -->
+        <h2 class="card-title">
+            <a asp-controller="Post" asp-action="Details" 
+               asp-route-author="@Model.Author.Username" 
+               asp-route-slug="@Model.Slug"
+               class="text-decoration-none text-dark">@Model.Title</a>
+        </h2>
+
+        <!-- Author Information -->
+        <div class="d-flex align-items-center mb-3">
+            <img src="@Model.Author.ProfilePictureUrl" alt="@Model.Author.DisplayName"
+                class="rounded-circle me-3" style="width: 40px; height: 40px;" />
+            <div>
+                <p class="mb-0">@Model.Author.DisplayName</p>
+                <small class="text-muted">Published on @Model.CreatedAt</small>
+            </div>
+        </div>
+
+        <!-- Post Excerpt -->
+        <p class="card-text">
+            @Model.Excerpt
+        </p>
+
+        <div class="d-inline-flex align-items-center">
+            <!-- Likes count -->
+            <span>👏</span>
+            <div class="ms-1 small text-muted">@Model.TotalClaps</div>
+
+            <!-- Comments count -->
+            <span class="ms-3">💬</span>
+            <div class="ms-1 small text-muted">@Model.Comments.Count</div>
+
+            <!-- Read More Button -->
+            <a asp-controller="Post" asp-action="Details" 
+               asp-route-author="@Model.Author.Username" 
+               asp-route-slug="@Model.Slug"
+               class="ms-3 btn btn-outline-primary">Read More</a>
+        </div>
+    </div>
+</div>

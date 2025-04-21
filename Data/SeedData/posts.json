@@ -1,0 +1,117 @@
+[
+  {
+    "Author": "uncle-bob",
+    "Html": "the-clean-architecture",
+    "Title": "The Clean Architecture",
+    "Published": "2012-08-13",
+    "Comments": [
+      {
+        "Author": "bruno",
+        "Message": "Thank you very much for writing this!"
+      },
+      {
+        "Author": "john_doe",
+        "Message": "Classic Uncle Bob - distilling complex concepts into clear principles. This has been my architectural north star for years."
+      }
+    ],
+    "ClapCount": 2850
+  },
+  {
+    "Author": "uncle-bob",
+    "Html": "Screaming-Architecture",
+    "Title": "Screaming ArchitectuIndexre",
+    "Published": "2011-09-30",
+    "Comments": [
+      {
+        "Author": "martinfowler",
+        "Message": "Another great piece, Bob. The 'screaming' metaphor really sticks with people."
+      },
+      {
+        "Author": "carol",
+        "Message": "First read this in college and it fundamentally changed how I approach project structure."
+      }
+    ],
+    "ClapCount": 1876
+  },
+  {
+    "Author": "martinfowler",
+    "Html": "TestDrivenDevelopment",
+    "Title": "Test Driven Development",
+    "Published": "2023-12-11",
+    "Comments": [
+      {
+        "Author": "gerrard",
+        "Message": "How do you recommend applying TDD principles to data science workflows?"
+      }
+    ],
+    "ClapCount": 478
+  },
+  {
+    "Author": "martinfowler",
+    "Html": "injection",
+    "Title": "Inversion of Control Containers and the Dependency Injection pattern",
+    "Published": "2004-01-23",
+    "Comments": [
+      {
+        "Author": "uncle-bob",
+        "Message": "Foundational work that still holds up decades later. Nice one, Martin."
+      },
+      {
+        "Author": "fernand",
+        "Message": "This was way ahead of its time. Modern DI frameworks all build on these concepts."
+      }
+    ],
+    "ClapCount": 3250
+  },
+  {
+    "Author": "albinowax",
+    "Html": "top-10-web-hacking-techniques-of-2024",
+    "Title": "Top 10 web hacking techniques of 2024",
+    "Published": "2025-02-04",
+    "Comments": [
+      {
+        "Author": "habeeb",
+        "Message": "Number 7 is particularly nasty - seeing more of this in the wild recently."
+      },
+      {
+        "Author": "alice",
+        "Message": "As a frontend dev, this was eye-opening. Need to audit our APIs ASAP."
+      }
+    ],
+    "ClapCount": 2893
+  },
+  {
+    "Author": "albinowax",
+    "Html": "so-you-want-to-be-a-web-security-researcher",
+    "Title": "So you want to be a web security researcher?",
+    "Published": "2018-05-18",
+    "Comments": [
+      {
+        "Author": "fernand",
+        "Message": "Thanks for the post. I'll be sure to read it!"
+      },
+      {
+        "Author": "albinowax",
+        "Message": "Happy to answer any questions from aspiring security researchers!"
+      },
+      {
+        "Author": "oliver",
+        "Message": "The bug bounty tips section was gold. Already found my first XSS thanks to this!"
+      }
+    ],
+    "ClapCount": 842
+  },
+  {
+    "Author": "anthropic",
+    "Html": "Introducing-the-Model-Context-Protocol_Anthropic",
+    "Title": "Introducing the Model Context Protocol",
+    "Published": "2024-11-25",
+    "Comments": [
+      {
+        "Author": "bruno",
+        "Message": "Thanks for sharing this. It's really interesting."
+      }
+    ],
+    "ClapCount": 4520
+  }
+]

@@ -1,0 +1,97 @@
+[
+  {
+    "Username": "system-clapper",
+    "DisplayName": "System Clapper",
+    "Bio": "This is a system clapper"
+  },
+  {
+    "Username": "alice",
+    "DisplayName": "Alice",
+    "Bio": "Frontend developer | React enthusiast | Coffee lover",
+    "Followers": ["bruno", "carol"]
+  },
+  {
+    "Username": "bruno",
+    "DisplayName": "Bruno",
+    "Bio": "Backend developer | Python & Django | Open-source contributor",
+    "Followers": ["alice", "dale", "elias"]
+  },
+  {
+    "Username": "carol",
+    "DisplayName": "Carol",
+    "Bio": "Full-stack developer | JavaScript & Node.js | Travel geek",
+    "Followers": ["alice"]
+  },
+  {
+    "Username": "dale",
+    "DisplayName": "Dale",
+    "Bio": "AI researcher | Machine learning | Chess player",
+    "Followers": ["bruno", "fernand"]
+  },
+  {
+    "Username": "elias",
+    "DisplayName": "Elias",
+    "Bio": "UI/UX Designer | Figma expert | Minimalist",
+    "Followers": ["alice", "bruno", "gerrard"]
+  },
+  {
+    "Username": "fernand",
+    "DisplayName": "Fernand",
+    "Bio": "Cloud architect | AWS & Azure | DevOps advocate",
+    "Followers": ["dale", "habeeb"]
+  },
+  {
+    "Username": "gerrard",
+    "DisplayName": "Gerrard",
+    "Bio": "Data scientist | Python & R | Marathon runner",
+    "Followers": ["bruno", "carol", "larry"]
+  },
+  {
+    "Username": "habeeb",
+    "DisplayName": "Habeeb",
+    "Bio": "Cybersecurity expert | Ethical hacker | Guitarist",
+    "Followers": ["fernand"]
+  },
+  {
+    "Username": "larry",
+    "DisplayName": "Larry",
+    "Bio": "Blockchain developer | Solidity | Crypto enthusiast",
+    "Followers": ["gerrard", "oliver"]
+  },
+  {
+    "Username": "oliver",
+    "DisplayName": "Oliver",
+    "Bio": "DevOps engineer | Kubernetes | Linux fan",
+    "Followers": ["fernand", "habeeb", "larry"]
+  },
+  {
+    "Username": "john_doe",
+    "DisplayName": "John Doe",
+    "Bio": "Software engineer and photography enthusiast. Building cool stuff with ASP.NET Core.",
+    "Followers": ["habeeb", "oliver"]
+  },
+  {
+    "Username": "uncle-bob",
+    "DisplayName": "Robert Martin",
+    "Bio": "A clean coder and a software architect. Author of Clean Architecture and The Clean Coder.",
+    "Followers": ["john_doe", "habeeb", "alice"]
+  },
+  {
+    "Username": "martinfowler",
+    "DisplayName": "Martin Fowler",
+    "Bio": "an author, speaker… essentially a loud-mouthed pundit on the topic of software development, primarily for Enterprise Applications.",
+    "Followers": ["larry", "oliver", "alice"]
+  },
+  {
+    "Username": "albinowax",
+    "DisplayName": "James Kettle",
+    "Bio": "Director of research at Portswigger",
+    "Followers": ["fernand", "bruno", "alice"]
+  },
+  {
+    "Username": "anthropic",
+    "DisplayName": "Anthropic",
+    "Bio": "AI research and products that put safety at the frontier",
+    "Followers": ["alice", "bruno", "carol", "dale"]
+  }
+]

@@ -1,0 +1,102 @@
+@model Author
+@inject MediumMvc.Services.IFollowService FollowService
+@inject IUserService UserService
+
+@{
+    ViewData["Title"] = Model.DisplayName;
+    var currentUser = await UserService.GetCurrentUserAsync();
+    var currentUserId = 0;
+    if (currentUser != null) currentUserId = currentUser.AuthorId;
+    var isFollowing = await FollowService.IsFollowing(currentUserId, Model.Id);
+    var followerCount = await FollowService.GetFollowerCount(Model.Id);
+    var followingCount = await FollowService.GetFollowingCount(Model.Id);
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h1 class="card-title">@Model.DisplayName</h1>
+                    <p class="text-muted">@Model.Bio</p>
+
+                    <div class="d-flex justify-content-center mb-4">
+                        <div class="mx-3">
+                            <div class="h5">@followerCount</div>
+                            <div class="text-muted">Followers</div>
+                        </div>
+                        <div class="mx-3">
+                            <div class="h5">@followingCount</div>
+                            <div class="text-muted">Following</div>
+                        </div>
+                    </div>
+                    <a asp-controller="Author" asp-action="Details" asp-route-username="@Model.Username">Preview</a>
+
+                    @if (currentUserId != Model.Id)
+                    {
+                        <button class="btn @(isFollowing ? "btn-outline-secondary" : "btn-primary") follow-btn"
+                            data-user-id="@Model.Id">
+                            @(isFollowing ? "Following" : "Follow")
+                        </button>
+                    }
+                </div>
+            </div>
+
+            <h3 class="mt-5">Latest Posts</h3>
+            @foreach (var post in Model.Posts.OrderByDescending(p => p.PublishedOn).Take(5))
+            {
+                <partial name="_PostItem" model="post" />
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.follow-btn').forEach(btn => {
+            btn.addEventListener('click', async function () {
+                const userId = this.dataset.userId;
+
+                try {
+                    const response = await fetch(`/api/follow/${userId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                        }
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+
+                        // Update button text and style
+                        if (result.isFollowing) {
+                            this.textContent = 'Following';
+                            this.classList.remove('btn-primary');
+                            this.classList.add('btn-outline-secondary');
+                        } else {
+                            this.textContent = 'Follow';
+                            this.classList.remove('btn-outline-secondary');
+                            this.classList.add('btn-primary');
+                        }
+                            this.classList.remove('btn-primary');
+                            this.classList.add('btn-outline-secondary');
+                        } else {
+                            this.textContent = 'Follow';
+                            this.classList.remove('btn-outline-secondary');
+                            this.classList.add('btn-primary');
+                        }
+
+                        // Update follower count display if needed
+                        const followerCountElement = document.querySelector('.follower-count');
+                        if (followerCountElement) {
+                            followerCountElement.textContent = result.followerCount;
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,221 @@
+<div class="section theme-navy-1">
+    <h1 class="heading-orange-1">So you want to be a web security researcher?</h1>
+    <div class="container-relative-medium-content-width">
+        <a href="https://twitter.com/albinowax">@albinowax</a>
+        </p>
+    </div>
+</div>
+<p>Are you interested in pushing hacking techniques beyond the current state of the art and sharing your findings with
+    the infosec community? In this post I’ll share some guidance on how to become a web security researcher, shaped by
+    the opportunities and pitfalls I’ve experienced while pursuing this path myself.</p>
+<h2>What is a web security researcher?</h2>
+<p>Web security researchers are people who go beyond using known hacking techniques likes <a
+        href= "https://portswigger.net/web-security/sql-injection">SQLi</a> and <a href= "https://portswigger.net/web-security/cross-site-scripting">XSS</a>, and
+    discover new threats to websites. These can be innovations that make existing techniques more powerful like this
+    approach to <a href="https://portswigger.net/blog/top-10-web-hacking-techniques-of-2018#7"
+        target="_blank">local+blind XXE exploitation</a>, or entire new threat classes like <a
+        href="https://portswigger.net/blog/top-10-web-hacking-techniques-of-2017#2" target="_blank">Web Cache
+        Deception</a>.</p>
+<p>It's extremely hard to defend websites against unknown attack techniques, so they can often be used to exploit huge
+    numbers of otherwise-secure websites. This means that publishing such discoveries to give websites a chance to patch
+    is crucial for the health of the security ecosystem.</p>
+<p>Note that some people use the term 'security researcher' more loosely to refer to anyone who works in offensive
+    security, even if they're just applying off-the-shelf tools and techniques.</p>
+<h2>Breaking stuff for a living</h2>
+<p>Most research is about taking existing techniques that bit further, so the first step is to get well acquainted with
+    the current state of the art. The fastest way to achieve this is to get a job where you spend most of your time
+    applying web hacking techniques. A lot of <a
+        href="https://medium.com/@niruragu/so-you-want-to-be-a-security-engineer-d8775976afb7" target="_blank">good
+        people</a> have shared&nbsp;<a
+        href="https://medium.com/@niruragu/so-you-want-to-be-a-security-engineer-d8775976afb7" target="_blank">detailed
+        advice</a> on getting into the security industry, so I’ll keep this section brief.</p>
+<p>I recommend a practice-focused approach starting with our <a href="https://portswigger.net/web-security"
+        target="_blank">Web Security Academy</a>,&nbsp;moving on to more open ended challenges like my own <a
+        href="https://hackxor.net/" target="_blank">hackxor.net</a>, advancing through soft, low-reward targets on <a
+        href="https://hackerone.com/" target="_blank">HackerOne</a> and <a href="https://bugcrowd.com/"
+        target="_blank">BugCrowd</a>, and then finally onto well established high-payout bounty programs. Once you have
+    a few publicly disclosed vulnerabilities it should be pretty easy to join a security consultancy and spend every day
+    hacking stuff. That said, bug bounty hunting isn't for everyone so we've launched the <a
+        href="https://portswigger.net/web-security/certification" target="_blank">Burp Suite Certified Practitioner</a>
+    certification as an alternative way to prove your skills and get that full-time hacking job.</p>
+<p>There are plenty of free online resources to help you on the way, including our <a
+        href="https://portswigger.net/web-security" target="_blank">Web Security Academy</a>, HackerOne's&nbsp;<a
+        href="https://www.hackerone.com/hacker101" target="_blank">Hacker101</a>,&nbsp;and the&nbsp;<a
+        href="https://owasp.org/www-project-web-security-testing-guide/stable/" target="_blank">OWASP testing guide</a>.
+    As for books, I’d recommend reading the <a
+        href="https://www.amazon.com/Web-Application-Hackers-Handbook-Exploiting-ebook/dp/B005LVQA9S"
+        target="_blank">WebApp Hacker’s Handbook</a>, and <a href="https://nostarch.com/tangledweb" target="_blank">The
+        Tangled Web</a>. The aforementioned Web Security Academy is intended to be an actively maintained, interactive
+    replacement to the WebApp Hacker's Handbook, but it'll take us some time to cover all relevant topics, so for now
+    I'd recommend using both.</p>
+<h2>Moving beyond known techniques</h2>
+<p>Once you start working full time breaking stuff, you’ll initially learn loads but after a while your technical
+    expertise will plateau unless you make a concerted effort to keep learning. Refusing to let yourself stop at this
+    barrier is the single most important step to becoming a web security researcher.</p>
+<h3 id="forgottenknowledge">Hunt forgotten knowledge</h3>
+<p>Everyone knows you’re meant to keep up with new developments by monitoring <a
+        href="https://twitter.com/albinowax/following" target="_blank">industry experts</a>, <a
+        href="https://www.reddit.com/r/netsec/" target="_blank">news aggregates</a> and security conferences. I even run
+    a subreddit for this purpose: <a href="https://www.reddit.com/r/websecurityresearch"
+        target="_blank">r/websecurityresearch</a>. However, to exclusively follow new developments is to overlook a
+    treasure trove of forgotten and overlooked research.&nbsp;</p>
+<p>Every time you read a good quality blog post, <span class="bold">read the entire archive</span>. This will often
+    unveil invaluable, forgotten tidbits of information. For example, take <a
+        href="https://web.archive.org/web/20110403015721/http://ha.ckers.org:80/blog/20091201/dns-rebinding-video/"
+        target="_blank">this post</a> by RSnake about DNS rebinding written in 2009. DNS rebinding completely bypasses
+    IP/firewall based <a href= "https://portswigger.net/web-security/access-control">access controls</a> on websites, and the only effective way
+    to mitigate it is by making your application whitelist the HTTP Host header. And yet at the time, people quickly
+    assumed it was mitigated by browsers; this forgotten vulnerability only re-entered common awareness with a string of
+    <a href="https://bugs.chromium.org/p/project-zero/issues/detail?id=1524" target="_blank">exploits</a> nine years
+    later.</p>
+<p>Perusing archives will also help you avoid wasting time replicating work that’s already been done by someone else,
+    such as <a href="https://twitter.com/LiveOverflow/status/967122565058715648" target="_blank">re-inventing</a> a CSS
+    attack one decade later. That said, some research is genuinely hard to find so occasional duplication is inevitable.
+    I've had a published technique collision with one researcher only for both of us to discover that kuza55 had done
+    the same thing five years prior. So, do your best to avoid duplicating research but if it happens anyway don’t panic
+    - it happens to all of us.</p>
+<h3 id="diversity">Collect diversity</h3>
+<p>To connect threads and spot opportunities that other people miss, it’s crucial to collect information from a range of
+    different sources. For a start, don’t limit yourself to reading security content - you’ll quickly find <a
+        href="http://blog.portswigger.net/2015/08/server-side-template-injection.html#FreeMarker"
+        target="_blank">documentation</a> can also serve as an exploit construction manual. Again, and this may be
+    pretty obvious, but as well as trying to solve problems by Googling and posing <a
+        href="https://www.corelan.be/index.php/2015/10/13/how-to-become-a-pentester/" target="_blank">well phrased
+        questions</a> to X/Reddit/StackOverflow, ensure you ask colleagues - there’s a huge amount of knowledge floating
+    around the community that people haven’t opted to share publicly.</p>
+<p>Beyond that, try to ensure your own experiences are diverse too.</p>
+<p>Doing black-box pentests for a security consultancy should expose you to a broad range of external and internal web
+    applications, the likes of which you’ll rarely encounter in a bug bounty program. But the time constraints will rob
+    you of the chance to understand an application with the familiarity that comes from months of bug bounty hunting
+    with a single target. And although it’s often slow and constrained, white-box source code reviews can offer an
+    irreplaceable alternative perspective, prompting attacks a black-box tester would never conceive. To nurture
+    research, you ideally want a healthy mix of all three. Further experiences like playing CTFs and coding web
+    applications can also add useful perspectives.</p>
+<h3>No idea is too stupid</h3>
+<p>One of the worst traps to fall into is dooming a great idea by assuming it won’t work and not trying it, because
+    “someone else would have noticed it already” or “that is too dumb to work”. I’ve definitely fallen for this one
+    before - one piece of research arrived two years later than it should have done thanks to such a mistake. Whether
+    it's <a href="https://blog.rapid7.com/2012/06/11/cve-2012-2122-a-tragically-comedic-security-flaw-in-mysql/"
+        target="_blank">bypassing authentication</a> by trying to login with the same password repeatedly, or&nbsp;<a
+        href="https://medium.com/bugbountywriteup/bypassing-googles-fix-to-access-their-internal-admin-panels-12acd3d821e3"
+        target="_blank">breaking into</a> a Google administration page by switching from your laptop to your phone, the
+    path to your next great exploit may well require a really stupid idea.</p>
+<h3 id="abandon">Abandon comfort</h3>
+<p>If a technique has a reputation for being difficult, fiddly, or dangerous, that's a topic in dire need of further
+    research. After repeatedly experiencing breakthroughs due to being pressured into exploring topics well outside my
+    comfort zone, I've decided that the fastest route to novel findings is actively seeking out topics that make you
+    uncomfortable. Chances are, these topics are avoided by other hackers, giving them serious research potential. To
+    me, this is the only plausible explanation for why I was able to take a technique first documented in 2005, and
+    presented again at DEF CON in 2016, and use it to earn <a
+        href="https://portswigger.net/blog/http-desync-attacks-request-smuggling-reborn" target="_blank">$70k in
+        bounties</a> in 2019.</p>
+<h2>Iterate, invent, share</h2>
+<h3 id="iterate">Iterate</h3>
+<p>The easiest way to get started is to find some promising research by someone else, build on it by mixing in other
+    techniques, then apply your new approach to some live targets to see if anything interesting happens</p>
+<p>For example, this <a href="https://ejj.io/misconfigured-cors/index.html" target="_blank">post</a> on <a
+        href= "https://portswigger.net/web-security/cors">CORS</a> misconfigurations pointed out an interesting behaviour and suggested that
+    this behaviour was prevalent, but stopped short of exploring the impact on individual websites.</p>
+<p>I took this concept and applied it to bug bounty websites where I could legally explore the impact and try my hand at
+    evading any mitigations they might have. Along the way I made some enhancements using common open redirect exploit
+    techniques, discovered the ‘null’ origin technique by reading the CORS spec, and explored cache poisoning
+    possibilities. </p>
+<p>Nothing in this process required sudden leaps of intuition or outstanding technical knowledge, and yet the final
+    product - <a href="https://portswigger.net/blog/exploiting-cors-misconfigurations-for-bitcoins-and-bounties"
+        target="_blank">Exploiting CORS misconfigurations for Bitcoins and bounties</a> -&nbsp;was easily as well
+    received as flashier efforts.</p>
+<h3 id="invent">Invent</h3>
+<p>Iterating on other people’s work is great, but the best research often seems to appear out of nowhere, be it <a
+        href="http://www.thespanner.co.uk/2014/03/21/rpo/" target="_blank">Relative Path Overwrite</a> or <a
+        href="https://omergil.blogspot.co.uk/2017/02/web-cache-deception-attack.html" target="_blank">Web Cache
+        Deception</a>. My view is that such discoveries are caused by personal experiences that act as hints. I refer to
+    these as leads or breadcrumbs as they’re often cryptic and it may take quite a few of them to guide you all the way
+    to a useful discovery.</p>
+<p>For example, in 2011 I was trying to crack the <a href= "https://portswigger.net/web-security/csrf">CSRF</a> protection used by
+    addons.mozilla.org. I had bypassed the token check, but they also validated that the host in the Referer header
+    matched the current site. I asked for help on the sla.ckers forum, and ‘barbarianbob’ spotted that Django determines
+    the current site’s host by looking at the HTTP Host header, and this could be overridden with the X-Forwarded-Host
+    header. This could be combined with a Flash header injection vulnerability to bypass the CSRF check, but more
+    importantly it was the first breadcrumb - it hinted that applications may rely on the host header to know their
+    current location.</p>
+<p>A while later, I took a look at the source code of Piwik’s password reset function and found a line that looked
+    something like:</p>
+<p><code>$passwordResetLink = getCurrentUrlWithoutQueryString() + $secretToken</code></p>
+<p>Aha, I thought. Piwik uses PHP which has hilarious path handling, so I can request a password reset at
+    <code>http://piwik.com/reset.php/foo;http://evil.com</code> resulting in an email with two links, and the secret
+    token being sent to evil.com. This idea worked, got me a bounty, and laid the foundation for the subsequent finding.
+</p>
+<p>The third and final crumb was the the way Piwik tried to patch this vulnerability - they replaced
+    <code>getCurrentUrlWithoutQueryString()</code> with <code>getCurrentUrlWithoutFileName()</code>. This meant that I
+    couldn’t use the path for an exploit anymore. Thanks to the encounter with Django earlier, I decided to dig further
+    into the code to find how Piwik determined what the current host name was, and discovered that like Django, they
+    used the HTTP host header, meaning I could easily generate poisoned password reset emails. As it turned out, this
+    technique worked on addons.mozilla.org too, and Gallery, and Symfony, and Drupal, and a whole host of other sites,
+    finally leading to <a href="https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html"
+        target="_blank">Practical HTTP Host Header Attacks</a>.</p>
+<p>By spelling out the discovery process in such a verbose way, I’ve hopefully demystified the research and made it look
+    less like an idea spontaneously appearing out of the blue. Viewed from this perspective, it looks like the core
+    skill (beyond pre-existing knowledge and breadth of experience) lies in recognising these breadcrumbs and
+    persistently chasing after them. I can’t quite articulate how to do this yet, but I do know to treat as a lead
+    anything that makes you say “this makes no sense”.</p>
+<h3 id="share">Share</h3>
+<p>Finally, it’s crucial to share your research with the community. This will help increase your profile and perhaps
+    persuade your employer to allocate you some more research time. Beyond that, it will help you avoid wasting time and
+    spur further research - commenters are really good at pointing out prior work you had no idea existed, and there’s
+    nothing more rewarding than seeing another researcher building on your ideas.</p>
+<p>Please don’t think a technique or idea isn’t worth sharing just because you don’t have ground-breaking discovery, two
+    logos and a presentation - just post whatever you have (ideally on a blog and not just some poorly indexed
+    locked-down platform like X/Twitter). X is good for promoting research, but not everyone is on there I'd recommend
+    also using alternative channels like <a href="https://www.reddit.com/r/websecurityresearch/"
+        target="_blank">r/websecurityresearch</a>.</p>
+<p>When sharing research, it’s always helpful to show at least one example of your technique being applied to exploit a
+    real application. Without this, people will inevitably have difficulty understanding it, and may doubt that it has
+    any practical value.</p>
+<p>Finally, presentations are great for reaching a wider audience, but beware of getting caught up in the infosec <span
+        class="strikethrough">circus</span>&nbsp;circuit and spending your days repeating past presentations.&nbsp;</p>
+<h2>Conclusion</h2>
+<p>I have a lot more to learn about web security research myself, so I hope to revisit this topic in a few years with
+    substantially more of a clue. Also, I expect other researchers have different perspectives, and look forward to
+    learning from any insights they decide to share.</p>
+<h4>Summary of my tips on how to become a web security researcher</h4>
+<ul>
+    <li>
+        <p>Hunt&nbsp;forgotten&nbsp;knowledge&nbsp;by&nbsp;reading&nbsp;archives</p>
+    </li>
+    <li>
+        <p>Consume&nbsp;information&nbsp;from&nbsp;as&nbsp;many&nbsp;distinct&nbsp;sources&nbsp;as&nbsp;possible</p>
+    </li>
+    <li>
+        <p>Prefer&nbsp;difficult/scary&nbsp;topics</p>
+    </li>
+    <li>
+        <p>Iterate,&nbsp;invent,&nbsp;and&nbsp;share</p>
+    </li>
+    <li>
+        <p>No&nbsp;idea&nbsp;is&nbsp;too&nbsp;stupid</p>
+    </li>
+</ul>
+<p>If you've found this post useful, you might also enjoy my presentation <a
+        href="https://portswigger.net/research/hunting-evasive-vulnerabilities" target="_blank">Hunting Evasive
+        Vulnerabilities</a>, which takes an in-depth look at why people miss vulnerabilities and how you can find them,
+    and also <a href="https://portswigger.net/research/how-i-choose-a-security-research-topic" target="_blank">How I
+        choose a security research topic</a>. Finally, if you’re looking for some reading to get yourself started, in
+    addition to our yearly <a href="https://portswigger.net/blog/top-10-web-hacking-techniques-of-2018"
+        target="_blank">Top 10 Web Hacking Techniques</a> roundup I’ve created a list of <a
+        href="https://skeletonscribe.net/#inspiration" target="_blank">various blogs</a> that have inspired me over the
+    years. Good luck and have fun!</p>
+<div class="container-flex-wrap">
+    <a class="label-rounded-outline-white" href= "https://portswigger.net/research/james-kettle">
+        James Favourites
+    </a>
+    <a class="label-rounded-outline-white" href= "https://portswigger.net/research/how-to-research">
+        How to research
+    </a>
+</div>
+<p><a href= "https://portswigger.net/research/articles" class="chevron-before">Back to all articles</a></p>
+</div>
+
+<div class="section-light section-full-width theme-grey-5">
+    <noscript>
+        <div class="noscript-warning">This page requires JavaScript for an enhanced user experience.</div>
+    </noscript>

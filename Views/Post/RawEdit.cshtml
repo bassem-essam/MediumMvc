@@ -1,0 +1,42 @@
+@model Post
+
+@{
+    ViewData["Title"] = "Raw Edit Post";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="mb-4">Edit Post</h1>
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+
+                <!-- Title -->
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control form-control-lg" placeholder="Enter post title" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <!-- Content (Rich Text Editor) -->
+                <div class="form-group mt-4">
+                    <label asp-for="Content" class="control-label"></label>
+                    <textarea asp-for="Content" id="postContent" class="form-control" rows="10"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+
+                <!-- Buttons -->
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">Save Changes</button>
+                    <a asp-action="Details" asp-route-author="@Model.Author.Username" asp-route-slug="@Model.Slug" class="btn btn-secondary btn-lg">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Client-side validation -->
+    <partial name="_ValidationScriptsPartial" />
+}

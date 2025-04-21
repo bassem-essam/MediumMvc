@@ -1,0 +1,218 @@
+@model Author
+
+@{
+    ViewData["Title"] = Model.DisplayName;
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Author Profile -->
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <div class="d-flex align-items-center gap-3 mt-3">
+                        <div class="d-flex gap-4">
+                            <a href="#" id="followerCount" class="text-muted" data-bs-toggle="modal"
+                                data-bs-target="#followersModal">0 followers</a>
+                            <a href="#" id="followingCount" class="text-muted" data-bs-toggle="modal"
+                                data-bs-target="#followingModal">0 following</a>
+                        </div>
+                        <button id="followButton"
+                            class="btn @(ViewBag.IsFollowing ? "btn-outline-primary" : "btn-primary") @(ViewBag.IsSelf || !User.Identity.IsAuthenticated ? "d-none" : "")"
+                            data-followed-id="@Model.Id">
+                            @(ViewBag.IsFollowing ? "Following" : "Follow")
+                        </button>
+                    </div>
+
+                    @section Scripts {
+                        <script>
+                            // Fetch follower counts on page load
+                            document.addEventListener('DOMContentLoaded', async function () {
+                                const followedId = document.getElementById('followButton').dataset.followedId;
+
+                                try {
+                                    const response = await fetch(`/api/follow/${followedId}`, {
+                                        method: 'GET',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        }
+                                    });
+
+                                    if (response.ok) {
+                                        const data = await response.json();
+                                        document.getElementById('followerCount').textContent = `${data.followerCount} followers`;
+                                        document.getElementById('followingCount').textContent = `${data.followingCount} following`;
+                                    }
+                                } catch (error) {
+                                    console.error('Error:', error);
+                                }
+                            });
+
+                            document.getElementById('followButton').addEventListener('click', async function () {
+                                const button = this;
+                                const followedId = button.dataset.followedId;
+
+                                try {
+                                    const response = await fetch(`/api/follow/${followedId}`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                                        }
+                                    });
+
+                                    if (response.ok) {
+                                        const data = await response.json();
+                                        button.textContent = data.isFollowing ? 'Following' : 'Follow';
+                                        button.className = data.isFollowing ? 'btn btn-outline-primary' : 'btn btn-primary';
+                                        document.getElementById('followerCount').textContent = `${data.followerCount} followers`;
+                                        document.getElementById('followingCount').textContent = `${data.followingCount} following`;
+                                    }
+                                } catch (error) {
+                                    console.error('Error:', error);
+                                }
+                            });
+
+                            // Load followers when modal is shown
+                            document.getElementById('followersModal').addEventListener('show.bs.modal', async function () {
+                                const followedId = document.getElementById('followButton').dataset.followedId;
+                                const followersList = document.getElementById('followersList');
+
+                                try {
+                                    const response = await fetch(`/api/follow/followers/${followedId}`);
+                                    if (response.ok) {
+                                        const followers = await response.json();
+                                        followersList.innerHTML = followers.map(f => `
+                                                    <div class="d-flex align-items-center mb-3">
+                                                        <img src="${f.profilePictureUrl || '/images/default_profile.svg'}" 
+                                                             class="rounded-circle me-3" 
+                                                             width="40" 
+                                                             height="40"
+                                                             onerror="this.src='/images/default_profile.svg'">
+                                                        <div>
+                                                            <h6>${f.displayName}</h6>
+                                                            <small class="text-muted">${f.bio || ''}</small>
+                                                        </div>
+                                                    </div>
+                                                `).join('');
+                                    }
+                                } catch (error) {
+                                    console.error('Error loading followers:', error);
+                                    followersList.innerHTML = 'Error loading followers';
+                                }
+                            });
+
+                            // Load following when modal is shown
+                            document.getElementById('followingModal').addEventListener('show.bs.modal', async function () {
+                                const followedId = document.getElementById('followButton').dataset.followedId;
+                                const followingList = document.getElementById('followingList');
+
+                                try {
+                                    const response = await fetch(`/api/follow/following/${followedId}`);
+                                    if (response.ok) {
+                                        const following = await response.json();
+                                        followingList.innerHTML = following.map(f => `
+                                                    <div class="d-flex align-items-center mb-3">
+                                                        <img src="${f.profilePictureUrl || '/images/default_profile.svg'}" 
+                                                             class="rounded-circle me-3" 
+                                                             width="40" 
+                                                             height="40"
+                                                             onerror="this.src='/images/default_profile.svg'">
+                                                        <div>
+                                                            <h6>${f.displayName}</h6>
+                                                            <small class="text-muted">${f.bio || ''}</small>
+                                                        </div>
+                                                    </div>
+                                                `).join('');
+                                    }
+                                } catch (error) {
+                                    console.error('Error loading following:', error);
+                                    followingList.innerHTML = 'Error loading following';
+                                }
+                            });
+                        </script>
+                    }
+                </div>
+            </div>
+
+            <!-- Author's Posts -->
+            <h2 class="mb-4">Posts by @Model.DisplayName</h2>
+
+            @if (Model.Posts.Any())
+            {
+                foreach (var post in Model.Posts)
+                {
+                    <partial name="_PostItem" model="post" />
+
+                    @* <div class="card mb-4">
+                        <div class="card-body">
+                            <!-- Post Title -->
+                            <h3 class="card-title">
+                                <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id" class="text-decoration-none text-dark">@post.Title</a>
+                            </h3>
+
+                            <!-- Post Excerpt -->
+                            <p class="card-text">
+                                @post.Excerpt
+                            </p>
+
+                            <!-- Read More Button -->
+                            <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id" class="btn btn-outline-primary">Read More</a>
+                        </div>
+                    </div> *@
+                }
+            }
+            else
+            {
+                <p>No posts found.</p>
+            }
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <img src="@Model.ProfilePictureUrl" alt="@Model.DisplayName" class="rounded-circle mb-3"
+                        style="width: 100px; height: 100px;" />
+                    <h3 class="card-title">@Model.DisplayName</h3>
+                    <div class="card-text">
+                        <h5 class="mt-3">About the Author</h5>
+                        <p>@Model.Bio</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Followers Modal -->
+        <div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="followersModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="followersModalLabel">Followers</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="followersList">
+                        Loading followers...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Following Modal -->
+        <div class="modal fade" id="followingModal" tabindex="-1" aria-labelledby="followingModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="followingModalLabel">Following</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="followingList">
+                        Loading following...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

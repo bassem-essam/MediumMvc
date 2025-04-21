@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Post>
+
+@{
+    ViewData["Title"] = "Home";
+    var currentSource = Context.Request.Query["feed"].FirstOrDefault() ?? "";
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="nav nav-tabs mb-4">
+                    <li class="nav-item">
+                        <a class="nav-link @(currentSource == "" ? "active" : "")" asp-controller="Home"
+                            asp-action="Index">For You</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(currentSource == "following" ? "active" : "")" asp-controller="Home"
+                            asp-action="Index" asp-route-feed="following">Following</a>
+                    </li>
+                </ul>
+
+                <!-- List of Posts -->
+                @foreach (var post in Model)
+                {
+                    <partial name="_PostItem" model="post" />
+                }
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        @{
+                            int currentPage = 1;
+                            if (Context.Request.Query["pageNumber"].FirstOrDefault() != null)
+                                int.TryParse(Context.Request.Query["pageNumber"].FirstOrDefault()!, out currentPage);
+                            string feedParam = Context.Request.Query["feed"].FirstOrDefault() ?? "";
+                        }
+                        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" 
+                               asp-action="Index" 
+                               asp-route-feed="@feedParam" 
+                               asp-route-pageNumber="@(currentPage - 1)">Previous</a>
+                        </li>
+                        <li class="page-item active">
+                            <span class="page-link">@currentPage</span>
+                        </li>
+                        <li class="page-item @(ViewBag.HasNextPage ? "" : "disabled")">
+                            <a class="page-link" 
+                               asp-action="Index" 
+                               asp-route-feed="@feedParam" 
+                               asp-route-pageNumber="@(currentPage + 1)">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome to Medium!</h1>
+        <p>Here you can read dozens of articles from top writers around the globe.</p>
+        <a class="nav-link" id="login" asp-area="Identity" asp-page="/Account/Login">
+            <button class="btn btn-primary mb-4">Get started</button>
+        </a>
+    </div>
+}
