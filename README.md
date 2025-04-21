@@ -22,4 +22,8 @@ A Medium-inspired platform built with ASP.NET Core MVC, featuring authentication
 - Business logic separation using services which are wired and managed by Dependency Injection (DI) container
 
 # Demo
-https://github.com/user-attachments/assets/fbd2c3de-5a7d-4170-8ab3-c841f6731b34
+Note: the video attachment does not work for some reason. You can download the video (by pressing on the three dots then press Download) and it should play without problems
+
+
+https://github.com/user-attachments/assets/419a04aa-1d19-41d2-8f22-c3d1e3db5eb7
+
