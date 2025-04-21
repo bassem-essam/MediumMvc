@@ -18,5 +18,8 @@ A Medium-inspired platform built with ASP.NET Core MVC, featuring authentication
 - Responsive UI with Bootstrap
 - Clean URL routiing (/@author/post-slug)
 - Rich text support using [TinyMCE](https://www.tiny.cloud/)
-- Avatar generation using [SkiaSharp](https://github.com/mono/SkiaSharp) which is based on [Google's Skia Graphics Library](https://skia.org/)
+- Dynamic avatar generation using [SkiaSharp](https://github.com/mono/SkiaSharp) which is based on [Google's Skia Graphics Library](https://skia.org/)
 - Business logic separation using services which are wired and managed by Dependency Injection (DI) container
+
+# Demo
+https://github.com/user-attachments/assets/fbd2c3de-5a7d-4170-8ab3-c841f6731b34
